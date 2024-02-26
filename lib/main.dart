@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'signup.dart';
 import 'login.dart';
+
+import 'package:flutter/material.dart';
 
 
 // example event class and events just for showing what it looks like
@@ -16,6 +17,12 @@ event event1 = event("Event 1", "19/12/2003", "Swindon");
 event event2 = event("Event 2", "03/02/2024", "Portsmouth");
 event event3 = event("Event 3", "12/09/2028", "Maldives");
 event event4 = event("Event 4", "02/01/2000", "Maldives");
+
+
+Color GlobBackgroundColor = Colors.lightBlue.shade50;
+Color GlobButtonColor = Colors.indigoAccent;
+Color GlobColor1 = Colors.deepPurple.shade900;
+
 
 
 List<event> eventList = [event1, event2, event3, event4] ;
@@ -41,36 +48,84 @@ class MainApp extends StatelessWidget {
         widgetList1 = [];
       } 
 
-      String eventText = "Event: ${eventList[i].name} \n Location: ${eventList[i].location} \n Date: ${eventList[i].date}";
+      String eventText = "Location: ${eventList[i].location}\nDate: ${eventList[i].date}";
       widgetList1.add(
         
         Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.029),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.024),
 
           child: SizedBox (
-            width: MediaQuery.of(context).size.width * 0.26,
+            
+            width: MediaQuery.of(context).size.width * 0.28,
             height: MediaQuery.of(context).size.height * 0.4,
             child: SizedBox.expand(
-              child: ElevatedButton(
-                onPressed: (){},
 
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightBlue.shade300),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )
-                  )
-                ),
-
-                child: Text(
-                  eventText,
-                  style: const TextStyle(fontSize: 22)
+              child: Material(
+                elevation: 10,
+              
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.zero,
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Colors.indigoAccent, width: 1),
+                    color: Colors.indigo.shade200,
                   ),
+
+                  child: Column(
+
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.0, (MediaQuery.of(context).size.width * 0.02), 0.0, (MediaQuery.of(context).size.width * 0.06)),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Text(
+                            eventList[i].name,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                            )
+                          )
+                        )
+                      ),
+                      
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          eventText,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white
+                          )
+                        )
+                      ),
+
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: (){},
+                                icon: const Icon(Icons.settings, size: 40, color: Colors.black),
+                              ),
+                              IconButton(
+                                onPressed: (){},
+                                icon: const Icon(Icons.info_outline, size: 40, color: Colors.black),
+                              )
+                            ]
+                          )
+                        )
+                      )
+                    ]
+                  )
+                )
               )
             )
-          )
-        ),
+          ),
+        )
       );   
     }
 
@@ -94,14 +149,15 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: GlobBackgroundColor,
 
         appBar: AppBar(
-          backgroundColor: Colors.grey,
+          backgroundColor: GlobColor1,
           leading: GestureDetector(
             onTap: () {
 
               // naya - add nav bar code here 
-              
+
             },
             child: const Icon(
               Icons.menu,
@@ -116,20 +172,30 @@ class MainApp extends StatelessWidget {
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(15), 
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: SizedBox.expand(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        //code to add new event
-                      },
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Add event",
-                          style: TextStyle(
-                            fontSize: 25,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Colors.indigoAccent, width: 1),
+                    color: Colors.indigo.shade200
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: SizedBox.expand(
+
+                      child: ElevatedButton(
+                        onPressed: () {
+                          //code to add new event
+                        },
+
+                        style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)))),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Add event",
+                            style: TextStyle(
+                              fontSize: 25,
+                            )
                           )
                         )
                       )
@@ -167,3 +233,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
