@@ -2,7 +2,7 @@ import 'signup.dart';
 import 'login.dart';
 
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 
 // example event class and events just for showing what it looks like
 class event {
@@ -27,7 +27,16 @@ Color GlobColor1 = Colors.deepPurple.shade900;
 
 List<event> eventList = [event1, event2, event3, event4] ;
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyCKiaqMqfbIQDU01955JdYViVCyrNku3Qo", 
+      appId: "1:1093883717402:web:abb7af20c185cc6b19aea3",
+      messagingSenderId: "1093883717402", 
+      projectId: "setapcoursework",
+    ),
+  );
   runApp(const MainApp());
 }
 
