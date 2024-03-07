@@ -1,3 +1,4 @@
+ // flutter run -d chrome
 import 'signup.dart';
 import 'login.dart';
 
@@ -24,7 +25,6 @@ Color GlobButtonColor = Colors.indigoAccent;
 Color GlobColor1 = Colors.deepPurple.shade900;
 
 
-
 List<event> eventList = [event1, event2, event3, event4] ;
 
 void main() async{
@@ -39,6 +39,8 @@ void main() async{
   );
   runApp(const MainApp());
 }
+
+
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
