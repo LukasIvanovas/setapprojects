@@ -1,9 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'signup.dart';
-import 'forgotPassword.dart';
+import 'node.dart';
+import 'main.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  String csv = "login_data.csv";
+  String fileData = await rootBundle.loadString(csv);
+  List <String> rows = fileData.split("\n");
+  for (int i = 0; i < rows.length; i++)  {
+    String row = rows[i];
+    List <String> itemInRow = row.split(",");
+    Node node = Node(
+        int.parse(itemInRow[0]),
+        itemInRow[1],
+        itemInRow[2],
+        itemInRow[3],
+        itemInRow[4],
+        itemInRow[5]
+    );
+    loginDetails.add(node);
+  }
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Login(),
+    );
+  }
+}
 
 class Login extends StatelessWidget {
+
+  final emailGiven = TextEditingController();
+  final passwordGiven = TextEditingController();
+  
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -42,7 +80,7 @@ class Login extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: emailGiven,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -84,7 +122,7 @@ class Login extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: TextEditingController(),
+                controller: passwordGiven(),
                 obscureText: true,
                 textAlign: TextAlign.start,
                 maxLines: 1,
@@ -198,7 +236,22 @@ class Login extends StatelessWidget {
                       flex: 1,
                       child: MaterialButton(
                         onPressed: () {
-                          // Add your login logic here
+                          int ID;
+                            String email = "";
+                            String passWord = "";
+                            Node current = loginDetails.first;
+                            ID = current.ID;
+                            email = current.email;
+                            passWord = current.passWord;
+                            for (Node num in loginDetails)
+                              if (emailGiven.text == num.email) {
+                                if (passwordGiven.text == num.passWord) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => MainApp()),
+                                  );
+                                }
+                              };
                         },
                         color: Color(0xff3a57e8),
                         elevation: 0,
