@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'signup.dart';
 import 'node.dart';
+import 'forgotPassword.dart';
 import 'main.dart';
+
+List<Node> loginDetails = [];
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -122,7 +125,7 @@ class Login extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: passwordGiven(),
+                controller: passwordGiven,
                 obscureText: true,
                 textAlign: TextAlign.start,
                 maxLines: 1,
