@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup.dart';
+import 'forgotPassword.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -125,21 +126,31 @@ class Login extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Forgot Password?",
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14,
-                      color: Color(0xff9e9e9e),
+                child: GestureDetector(
+                  onTap: () {
+                    // navigate to forgot password page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPassword()),
+                    );
+                  },
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Forgot Password?",
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9e9e9e),
+                      ),
                     ),
                   ),
                 ),
               ),
+
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                 child: Row(
