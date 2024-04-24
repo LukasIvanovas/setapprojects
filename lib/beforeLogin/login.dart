@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'signup.dart';
-import 'node.dart';
+import '../node.dart';
 import 'forgotPassword.dart';
-import 'main.dart';
+import '../afterLogin/main.dart';
 
 List<Node> loginDetails = [];
 
