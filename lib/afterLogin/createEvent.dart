@@ -279,7 +279,8 @@ class _CreateEventState extends State<CreateEvent> {
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: MaterialButton(
                   onPressed: () {
-// Add the logic to handle the "Create Event" button press
+// Add the logic to handle the "Create Event" button press.
+                  // WHEN CREATED GO BACK TO yourEvents (george made)
                   },
                   color: Color(0xff3a57e8),
                   elevation: 0,
