@@ -33,56 +33,59 @@ class _AccountSettingsState extends State<AccountSettings> {
     prefs.setBool('darkMode', _darkMode);
   }
 
-  @override
-  Widget build(BuildContext context)  {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: getSettingsPageDecoration(
-          Colors.grey[200]!,
-        ),
-        child: ListView.separated(
-          itemCount: 3,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            return buildListTile(
-              title: index == 0
-                  ? "Change Password"
-                  : index == 1
-                      ? "Dark mode"
-                      : index == 2
-                          ? "Post Notifications"
-                          : "",
-              trailing: index == 1
-                  ? Switch(
-                      value: _darkMode,
-                      onChanged: (value) {
-                        setState(() {
-                          _darkMode = value;
-                        });
-                        _saveSettings();
-                      },
-                      activeColor: const Color(
-                        0xff3a57e8,
-                      ))
-                  : index == 2
-                      ? Switch(
-                          value: _postNotifications,
-                          onChanged: (value) {
-                            setState(() {
-                              _postNotifications = value;
-                            });
-                            _saveSettings();
-                          },
-                          activeColor: const Color(
-                            0xff3a57e8,
-                          ))
-                      : const Icon(Icons.keyboard_arrow_right_sharp,
-                          color: Color.fromARGB(255, 95, 118, 230)),
-            );
-          },
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: getSettingsPageDecoration(
+            _darkMode ? Colors.grey[900]! : Colors.grey[200]!,
+          ),
+          child: ListView.separated(
+            itemCount: 3,
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              return buildListTile(
+                title: index == 0
+                    ? "Change Password"
+                    : index == 1
+                        ? "Dark mode"
+                        : index == 2
+                            ? "Push Notifications"
+                            : "",
+                trailing: index == 1
+                    ? Switch(
+                        value: _darkMode,
+                        onChanged: (value) {
+                          setState(() {
+                            _darkMode = value;
+                          });
+                          _saveSettings();
+                        },
+                        activeColor: const Color(
+                          0xff3a57e8,
+                        ))
+                    : index == 2
+                        ? Switch(
+                            value: _postNotifications,
+                            onChanged: (value) {
+                              setState(() {
+                                _postNotifications = value;
+                              });
+                              _saveSettings();
+                            },
+                            activeColor: const Color(
+                              0xff3a57e8,
+                            ))
+                        : const Icon(Icons.keyboard_arrow_right_sharp,
+                            color: Color.fromARGB(255, 95, 118, 230)),
+              );
+            },
+          ),
         ),
       ),
     );
