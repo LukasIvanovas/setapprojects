@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -6,7 +7,35 @@ void main() {
   ));
 }
 
-class CreateEvent extends StatelessWidget {
+class CreateEvent extends StatefulWidget {
+  @override
+  _CreateEventState createState() => _CreateEventState();
+}
+
+class _CreateEventState extends State<CreateEvent> {
+  // Define a variable to store the selected date
+  DateTime selectedDate = DateTime.now();
+
+  // Function to show the Cupertino date picker
+  void _showDatePicker(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Container(
+        height: 200,
+        color: CupertinoColors.white,
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.date,
+          initialDateTime: selectedDate,
+          onDateTimeChanged: (DateTime newDateTime) {
+            setState(() {
+              selectedDate = newDateTime;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +177,6 @@ class CreateEvent extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
                   controller: TextEditingController(),
-                  obscureText: true,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: TextStyle(
@@ -192,7 +220,6 @@ class CreateEvent extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
                   controller: TextEditingController(),
-                  obscureText: true,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: TextStyle(
@@ -234,75 +261,48 @@ class CreateEvent extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: TextField(
-                  controller: TextEditingController(),
-                  obscureText: true,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                    color: Color(0xff000000),
+                child: CupertinoTextField(
+                  onTap: () {
+                    _showDatePicker(context);
+                  },
+                  readOnly: true,
+                  controller:
+                  TextEditingController(text: "${selectedDate.toLocal()}".split(' ')[0]),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: CupertinoColors.white,
+                    border: Border.all(color: CupertinoColors.systemGrey),
                   ),
-                  decoration: InputDecoration(
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: MaterialButton(
+                  onPressed: () {
+// Add the logic to handle the "Create Event" button press
+                  },
+                  color: Color(0xff3a57e8),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    side: BorderSide(
+                      color: Color(0xff9e9e9e),
+                      width: 1,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
-                    ),
-                    labelText: "Event Time",
-                    labelStyle: TextStyle(
+                  ),
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    "Create Event",
+                    style: TextStyle(
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
-                      fontSize: 16,
-                      color: Color(0xff9e9e9e),
                     ),
-                    filled: true,
-                    fillColor: Color(0x00ffffff),
-                    isDense: false,
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
+                  textColor: Color(0xffffffff),
+                  height: 40,
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  // Add the logic to handle the "Create Event" button press
-                },
-                color: Color(0xff3a57e8),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  side: BorderSide(
-                    color: Color(0xff9e9e9e),
-                    width: 1,
-                  ),
-                ),
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  "Create Event",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-                textColor: Color(0xffffffff),
-                height: 40,
-
-              ),
-
             ],
           ),
         ),
