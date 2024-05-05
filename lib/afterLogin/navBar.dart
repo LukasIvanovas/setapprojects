@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/account_settings.dart';
-import 'package:flutter_application/pages/create_event.dart';
-import 'package:flutter_application/pages/home.dart';
-import 'package:flutter_application/pages/invited_events.dart';
-import 'package:flutter_application/pages/logout.dart';
-import 'package:flutter_application/pages/view_events.dart';
+import '../pages/account_settings';
+import '../pages/create_event.dart';
+import '../pages/home.dart';
+import '../pages/invited_events.dart';
+import '../pages/logOutPage.dart';
+import '../pages/view_events.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     const ViewEvents(),
     const InvitedEvents(),
     const AccountSettings(),
-    const LogOut(),
+    LogOutPage(),
   ];
 
   @override
