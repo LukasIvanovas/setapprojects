@@ -1,46 +1,112 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
+import 'package:setap_1/assets/change_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AccountSettings extends StatelessWidget {
+class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
 
   @override
+  _AccountSettingsState createState() => _AccountSettingsState();
+}
+
+class _AccountSettingsState extends State<AccountSettings> {
+  bool _postNotifications = true;
+  bool _darkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _postNotifications = prefs.getBool('postNotifications') ?? true;
+      _darkMode = prefs.getBool('darkMode') ?? false;
+    });
+  }
+
+  _saveSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('postNotifications', _postNotifications);
+    prefs.setBool('darkMode', _darkMode);
+  }
+
+@override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: getSettingsPageDecoration(
-          const Color(0xff3a57e8),
-        ),
-        child: ListView.separated(
-          itemCount: 3,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            return buildListTile(
-              title: index == 0
-                  ? "Change Password"
-                  : index == 1
-                      ? "Dark mode"
-                      : index == 2
-                          ? "Notifications"
-                          : "",
-            );
-          },
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: getSettingsPageDecoration(
+            _darkMode ? Colors.grey[900]! : Colors.grey[200]!,
+          ),
+          child: ListView.separated(
+            itemCount: 3,
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              return buildListTile(
+                title: index == 0
+                    ? "Change Password"
+                    : index == 1
+                        ? "Dark mode"
+                        : index == 2
+                            ? "Push Notifications"
+                            : "",
+                trailing: index == 1
+                    ? Switch(
+                        value: _darkMode,
+                        onChanged: (value) {
+                          setState(() {
+                            _darkMode = value;
+                          });
+                          _saveSettings();
+                        },
+                        activeColor: const Color(
+                          0xff3a57e8,
+                        ))
+                    : index == 2
+                        ? Switch(
+                            value: _postNotifications,
+                            onChanged: (value) {
+                              setState(() {
+                                _postNotifications = value;
+                              });
+                              _saveSettings();
+                            },
+                            activeColor: const Color(
+                              0xff3a57e8,
+                            ))
+                        : const Icon(Icons.keyboard_arrow_right_sharp,
+                            color: Color.fromARGB(255, 95, 118, 230)),
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  ListTile buildListTile({required String title}) {
+  ListTile buildListTile({required String title, Widget? trailing}) {
     return ListTile(
       title: Text(
         title,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
-      textColor: Colors.white,
-      trailing:
-          const Icon(Icons.keyboard_arrow_right_sharp, color: Colors.white),
+      textColor: Color.fromARGB(255, 95, 118, 230),
+      trailing: trailing,
+      onTap: () {
+        if (title == "Change Password") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ChangePassword()),
+          );
+        }
+      },
     );
   }
 
@@ -50,11 +116,4 @@ class AccountSettings extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(16)),
     );
   }
-}
-
-Decoration getSettingsPageDecoration(Color color) {
-  return BoxDecoration(
-    color: color,
-    borderRadius: const BorderRadius.all(Radius.circular(16)),
-  );
 }
