@@ -1,6 +1,7 @@
  // flutter run -d chrome
 import '../beforeLogin/signup.dart';
 import '../beforeLogin/login.dart';
+import '../afterLogin/createEvent.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -196,9 +197,11 @@ class MainApp extends StatelessWidget {
 
                       child: ElevatedButton(
                         onPressed: () {
-                          //code to add new event
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CreateEvent()),
+                          );
                         },
-
                         style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)))),
                         child: const Align(
                           alignment: Alignment.center,
