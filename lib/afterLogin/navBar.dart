@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../pages/account_settings';
-import '../pages/create_event.dart';
-import '../pages/home.dart';
-import '../pages/invited_events.dart';
-import '../pages/logOutPage.dart';
-import '../pages/view_events.dart';
+import "main.dart";
+import "createEvent.dart";
+import "view_events.dart";
+import "invited_events.dart";
+import "account_settings.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
