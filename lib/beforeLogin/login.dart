@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:setapprojects/afterLogin/navBar.dart';
 import 'signup.dart';
 import '../node.dart';
 import 'forgotPassword.dart';
-import '../afterLogin/main.dart';
+
+
 
 List<Node> loginDetails = [];
 
@@ -251,7 +253,7 @@ class Login extends StatelessWidget {
                                 if (passwordGiven.text == num.passWord) {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => MainApp()),
+                                    MaterialPageRoute(builder: (context) => HomePage()),
                                   );
                                 }
                               };
