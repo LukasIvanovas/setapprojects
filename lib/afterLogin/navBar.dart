@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../pages/account_settings';
-import '../pages/create_event.dart';
-import '../pages/home.dart';
-import '../pages/invited_events.dart';
-import '../pages/logOutPage.dart';
-import '../pages/view_events.dart';
+import "main.dart";
+import "createEvent.dart";
+import "view_events.dart";
+import "invited_events.dart";
+import "accountSettings.dart";
+
+class LogOut {}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,12 +23,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<Widget> _pages = [
-    const UserHome(),
-    const CreateEvent(),
+    const MainApp(),
+    CreateEvent(),
     const ViewEvents(),
     const InvitedEvents(),
     const AccountSettings(),
-    LogOutPage(),
+    // LogOut(),
   ];
 
   @override

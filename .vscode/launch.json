@@ -7,7 +7,8 @@
         {
             "name": "setapprojects",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "./lib/beforeLogin/login.dart"
         },
         {
             "name": "setapprojects (profile mode)",
