@@ -5,6 +5,8 @@ import "view_events.dart";
 import "invited_events.dart";
 import "account_settings.dart";
 
+class LogOut {}
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
