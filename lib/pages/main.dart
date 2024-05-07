@@ -1,7 +1,7 @@
  // flutter run -d chrome
-import '../beforeLogin/signup.dart';
-import '../beforeLogin/login.dart';
-import '../afterLogin/createEvent.dart';
+import 'signup.dart';
+import 'login.dart';
+import 'createEvent.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

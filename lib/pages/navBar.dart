@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import "main.dart";
-import "createEvent.dart";
-import "view_events.dart";
-import "invited_events.dart";
-import "accountSettings.dart";
+import 'main.dart';
+import 'createEvent.dart';
+import 'view_events.dart';
+import 'invited_events.dart';
+import 'accountSettings.dart';
 
 class LogOut {}
 

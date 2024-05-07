@@ -1,32 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:setapprojects/afterLogin/navBar.dart';
+import 'package:get/get.dart';
+import 'user_model.dart';
+import 'firebase_options.dart';
 import 'signup.dart';
-import '../node.dart';
+import 'node.dart';
 import 'forgotPassword.dart';
-
-
-
-List<Node> loginDetails = [];
+import 'main.dart';
+import 'profile_controller.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  String csv = "./assets/login_data.csv";
-  String fileData = await rootBundle.loadString(csv);
-  List <String> rows = fileData.split("\n");
-  for (int i = 0; i < rows.length; i++)  {
-    String row = rows[i];
-    List <String> itemInRow = row.split(",");
-    Node node = Node(
-        int.parse(itemInRow[0]),
-        itemInRow[1],
-        itemInRow[2],
-        itemInRow[3],
-        itemInRow[4],
-        itemInRow[5]
-    );
-    loginDetails.add(node);
-  }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MyApp());
 }
@@ -44,6 +32,7 @@ class Login extends StatelessWidget {
 
   final emailGiven = TextEditingController();
   final passwordGiven = TextEditingController();
+  final controller = Get.put(ProfileController());
   
   @override
   
@@ -240,23 +229,14 @@ class Login extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: MaterialButton(
-                        onPressed: () {
-                          int ID;
-                            String email = "";
-                            String passWord = "";
-                            Node current = loginDetails.first;
-                            ID = current.ID;
-                            email = current.email;
-                            passWord = current.passWord;
-                            for (Node num in loginDetails)
-                              if (emailGiven.text == num.email) {
-                                if (passwordGiven.text == num.passWord) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => HomePage()),
-                                  );
-                                }
-                              };
+                        onPressed: () async {
+                          List<UserModel> userDataList = await ProfileController.instance.getUserData(emailGiven.text);
+                          if (userDataList[0].passWord == passwordGiven.text) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MainApp()),
+                            );
+                          }
                         },
                         color: Color(0xff3a57e8),
                         elevation: 0,

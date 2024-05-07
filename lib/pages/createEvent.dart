@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'user_repository.dart';
+import 'user_model.dart';
+import 'profile_controller.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,11 +15,15 @@ class CreateEvent extends StatefulWidget {
   _CreateEventState createState() => _CreateEventState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
-  // Define a variable to store the selected date
-  DateTime selectedDate = DateTime.now();
 
-  // Function to show the Cupertino date picker
+class _CreateEventState extends State<CreateEvent> {
+
+  DateTime selectedDate = DateTime.now();
+  TextEditingController eventNameController = TextEditingController();
+  TextEditingController eventTypeController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController postcodeController = TextEditingController();
+
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
@@ -35,6 +42,18 @@ class _CreateEventState extends State<CreateEvent> {
       ),
     );
   }
+
+  void createEvent() async {
+  EventModel event = EventModel(
+    eventName: eventNameController.text,
+    eventType: eventTypeController.text,
+    city: cityController.text,
+    postcode: postcodeController.text,
+    date: selectedDate,
+  );
+  UserRepository.instance.addEventToUser(userDocumentId, event);
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +103,7 @@ class _CreateEventState extends State<CreateEvent> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: eventNameController,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -131,16 +150,26 @@ class _CreateEventState extends State<CreateEvent> {
                   items: [
                     DropdownMenuItem(
                       child: Text("Birthday Party"),
-                      value: "Type 1",
+                      value: "Birthday Party",
                     ),
                     DropdownMenuItem(
                       child: Text("Wedding"),
-                      value: "Type 2",
+                      value: "Wedding",
                     ),
-                    // Add more dropdown items as needed
+                    DropdownMenuItem(
+                      child: Text("School Renunion"),
+                      value: "School Renunion",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Holiday"),
+                      value: "Holiday",
+                    ),
+
                   ],
                   onChanged: (value) {
-                    // Handle the selected value
+                    setState(() {
+                      eventTypeController.text = value.toString(); 
+                    });
                   },
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
@@ -176,7 +205,7 @@ class _CreateEventState extends State<CreateEvent> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: cityController,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: TextStyle(
@@ -219,7 +248,7 @@ class _CreateEventState extends State<CreateEvent> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: postcodeController,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: TextStyle(
@@ -279,8 +308,10 @@ class _CreateEventState extends State<CreateEvent> {
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: MaterialButton(
                   onPressed: () {
-// Add the logic to handle the "Create Event" button press.
-                  // WHEN CREATED GO BACK TO yourEvents (george made)
+                    print("creating started");
+                    createEvent();
+                    Navigator.of(context).pop();
+                    print("creating finished");
                   },
                   color: Color(0xff3a57e8),
                   elevation: 0,
