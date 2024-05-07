@@ -11,7 +11,7 @@ List<Node> loginDetails = [];
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  String csv = ".assets/login_data.csv";
+  String csv = "./assets/login_data.csv";
   String fileData = await rootBundle.loadString(csv);
   List <String> rows = fileData.split("\n");
   for (int i = 0; i < rows.length; i++)  {
