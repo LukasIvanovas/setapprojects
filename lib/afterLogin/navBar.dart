@@ -23,12 +23,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<Widget> _pages = [
-    const UserHome(),
-    const CreateEvent(),
+    const MainApp(),
+    CreateEvent(),
     const ViewEvents(),
     const InvitedEvents(),
     const AccountSettings(),
-    // LogOutPage(),
+    // LogOut(),
   ];
 
   @override
