@@ -3,7 +3,7 @@ import "main.dart";
 import "createEvent.dart";
 import "view_events.dart";
 import "invited_events.dart";
-import "account_settings.dart";
+import "accountSettings.dart";
 
 class LogOut {}
 
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     const ViewEvents(),
     const InvitedEvents(),
     const AccountSettings(),
-    LogOutPage(),
+    // LogOutPage(),
   ];
 
   @override
