@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'user_model.dart';
+import 'package:get/get.dart';
+import 'user_repository.dart';
 import 'login.dart';
 
 class SignUp extends StatelessWidget {
+
+  final emailGivens = TextEditingController();
+  final passwordGivens = TextEditingController();
+  final confirmPassword = TextEditingController();
+  final usernameGiven = TextEditingController();
+  final question1 = TextEditingController();
+  final question2 = TextEditingController();
+
+  final userRepo = Get.put(UserRepository());
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
@@ -54,7 +68,7 @@ class SignUp extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: usernameGiven,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -98,7 +112,7 @@ class SignUp extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: emailGivens,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -142,7 +156,7 @@ class SignUp extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: passwordGivens,
                     obscureText: true,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -186,7 +200,7 @@ class SignUp extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 30),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: confirmPassword,
                     obscureText: true,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -236,7 +250,16 @@ class SignUp extends StatelessWidget {
                       flex: 1,
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          if (passwordGivens.text == confirmPassword.text) {
+                            final user = UserModel(
+                              email: emailGivens.text,
+                              passWord: passwordGivens.text,
+                              question1: "test",
+                              question2: "test",
+                              userName:  usernameGiven.text,
+                            );
+                            userRepo.createUser(user);
+                          }
                         },
                         color: Color(0xff3a57e8),
                         elevation: 0,
