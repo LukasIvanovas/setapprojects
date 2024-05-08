@@ -38,6 +38,13 @@ class UserRepository extends GetxController {
     print("add event to user finished");
   }
 
+  Future<void> updateUserEvent(String userId, String eventId, EventModel event) async {
+    print("updating event");
+    _db.collection("users").doc(userId).collection("events").doc(eventId).update(event.toJson());
+    print("event updated");
+  
+  }
+
   Future<String> getDocumentIdByEmail(String email) async {
     print(email);
     final snapshot = await _db.collection("users").where("email", isEqualTo: email).get();
