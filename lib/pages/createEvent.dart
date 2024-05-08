@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'user_repository.dart';
 import 'user_model.dart';
 import 'profile_controller.dart';
+import 'main.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,9 +16,7 @@ class CreateEvent extends StatefulWidget {
   _CreateEventState createState() => _CreateEventState();
 }
 
-
 class _CreateEventState extends State<CreateEvent> {
-
   DateTime selectedDate = DateTime.now();
   TextEditingController eventNameController = TextEditingController();
   TextEditingController eventTypeController = TextEditingController();
@@ -44,16 +43,15 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   void createEvent() async {
-  EventModel event = EventModel(
-    eventName: eventNameController.text,
-    eventType: eventTypeController.text,
-    city: cityController.text,
-    postcode: postcodeController.text,
-    date: selectedDate,
-  );
-  UserRepository.instance.addEventToUser(userDocumentId, event);
-}
-
+    EventModel event = EventModel(
+      eventName: eventNameController.text,
+      eventType: eventTypeController.text,
+      city: cityController.text,
+      postcode: postcodeController.text,
+      date: selectedDate,
+    );
+    UserRepository.instance.addEventToUser(userDocumentId, event);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,17 +115,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Name",
                     labelStyle: TextStyle(
@@ -140,7 +138,7 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
@@ -157,35 +155,34 @@ class _CreateEventState extends State<CreateEvent> {
                       value: "Wedding",
                     ),
                     DropdownMenuItem(
-                      child: Text("School Renunion"),
-                      value: "School Renunion",
+                      child: Text("School Reunion"),
+                      value: "School Reunion",
                     ),
                     DropdownMenuItem(
                       child: Text("Holiday"),
                       value: "Holiday",
                     ),
-
                   ],
                   onChanged: (value) {
                     setState(() {
-                      eventTypeController.text = value.toString(); 
+                      eventTypeController.text = value.toString();
                     });
                   },
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Type",
                     labelStyle: TextStyle(
@@ -198,7 +195,7 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
@@ -218,17 +215,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "City / Town",
                     labelStyle: TextStyle(
@@ -241,7 +238,7 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
@@ -261,17 +258,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                          BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Postcode",
                     labelStyle: TextStyle(
@@ -284,7 +281,7 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
@@ -295,8 +292,8 @@ class _CreateEventState extends State<CreateEvent> {
                     _showDatePicker(context);
                   },
                   readOnly: true,
-                  controller:
-                  TextEditingController(text: "${selectedDate.toLocal()}".split(' ')[0]),
+                  controller: TextEditingController(
+                      text: "${selectedDate.toLocal()}".split(' ')[0]),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: CupertinoColors.white,
@@ -310,7 +307,13 @@ class _CreateEventState extends State<CreateEvent> {
                   onPressed: () {
                     print("creating started");
                     createEvent();
-                    Navigator.of(context).pop();
+                    // Navigate back to MyApp after event creation
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => MainApp()),
+                      // Assuming MainApp is MyApp
+                      (Route<dynamic> route) => false,
+                    );
+
                     print("creating finished");
                   },
                   color: Color(0xff3a57e8),
