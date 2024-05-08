@@ -5,7 +5,6 @@ import 'user_repository.dart';
 import 'login.dart';
 
 class SignUp extends StatelessWidget {
-
   final emailGivens = TextEditingController();
   final passwordGivens = TextEditingController();
   final confirmPassword = TextEditingController();
@@ -16,7 +15,6 @@ class SignUp extends StatelessWidget {
   final userRepo = Get.put(UserRepository());
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
@@ -79,21 +77,7 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
+                      // Updated decoration properties for Name field
                       labelText: "Name",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -104,11 +88,23 @@ class SignUp extends StatelessWidget {
                       filled: true,
                       fillColor: Color(0x00ffffff),
                       isDense: false,
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
                     ),
                   ),
                 ),
+                // Email field
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
@@ -123,21 +119,7 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
+                      // Updated decoration properties for Email field
                       labelText: "Email",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -148,11 +130,23 @@ class SignUp extends StatelessWidget {
                       filled: true,
                       fillColor: Color(0x00ffffff),
                       isDense: false,
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
                     ),
                   ),
                 ),
+                // Password field
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
@@ -167,21 +161,7 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
+                      // Updated decoration properties for Password field
                       labelText: "Password",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -192,11 +172,23 @@ class SignUp extends StatelessWidget {
                       filled: true,
                       fillColor: Color(0x00ffffff),
                       isDense: false,
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
                     ),
                   ),
                 ),
+                // Confirm Password field
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 30),
                   child: TextField(
@@ -211,21 +203,7 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                        BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      ),
+                      // Updated decoration properties for Confirm Password field
                       labelText: "Confirm Password",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -236,8 +214,19 @@ class SignUp extends StatelessWidget {
                       filled: true,
                       fillColor: Color(0x00ffffff),
                       isDense: false,
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
                     ),
                   ),
                 ),
@@ -254,11 +243,37 @@ class SignUp extends StatelessWidget {
                             final user = UserModel(
                               email: emailGivens.text,
                               passWord: passwordGivens.text,
-                              question1: "test",
-                              question2: "test",
-                              userName:  usernameGiven.text,
+                              question1: "test", // Replace with actual questions
+                              question2: "test", // Replace with actual questions
+                              userName: usernameGiven.text,
                             );
                             userRepo.createUser(user);
+
+                            // Show success message
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Success"),
+                                  content: Text("Account created successfully!"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        // Navigate to the Login screen
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Login(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text("OK"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
                         },
                         color: Color(0xff3a57e8),
