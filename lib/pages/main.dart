@@ -105,12 +105,10 @@ class MainApp extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                onPressed: (){},
-                                icon: const Icon(Icons.settings, size: 40, color: Colors.black),
-                              ),
-                              IconButton(
-                                onPressed: (){},
-                                icon: const Icon(Icons.info_outline, size: 40, color: Colors.black),
+                                onPressed: (){
+                                  // ferrel add code here
+                                },
+                                icon: const Icon(Icons.ios_share, size: 40, color: Colors.black),
                               )
                             ]
                           )
