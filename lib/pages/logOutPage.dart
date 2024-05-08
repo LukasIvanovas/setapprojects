@@ -17,7 +17,6 @@ class LogOutPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigate directly to the Login widget
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => Login())
             );

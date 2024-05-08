@@ -54,7 +54,7 @@ class MainApp extends StatelessWidget {
           String eventType = eventData['eventType'] ?? 'No Type';
           String eventPostcode = eventData['postcode'] ?? 'No Postcode';
 
-      String eventDetails = "Type: $eventType\nLocation: $eventLocation, $eventPostcode\nDate: $eventDate";
+      String eventDetails = "Location: $eventLocation\nDate: $eventDate";
       eventWidgets.add(
         Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.024),
