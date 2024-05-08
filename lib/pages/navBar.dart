@@ -5,7 +5,7 @@ import 'createEvent.dart';
 import 'home.dart';
 import 'invited_events.dart';
 import 'logOutPage.dart';
-import 'view_events.dart';
+import 'editEvents.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const MainApp(), 
     CreateEvent(),
-    const ViewEvents(),
+    const EditEvents(),
     const InvitedEvents(),
     const AccountSettings(),
     LogOutPage(),
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.add), label: 'Create Event'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month_outlined),
-                label: 'View Events'),
+                label: 'Edit Events'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.inbox_outlined), label: 'Invited Events'),
             BottomNavigationBarItem(
