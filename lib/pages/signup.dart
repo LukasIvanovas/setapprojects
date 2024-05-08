@@ -4,7 +4,12 @@ import 'package:get/get.dart';
 import 'user_repository.dart';
 import 'login.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final emailGivens = TextEditingController();
   final passwordGivens = TextEditingController();
   final confirmPassword = TextEditingController();
@@ -13,6 +18,8 @@ class SignUp extends StatelessWidget {
   final question2 = TextEditingController();
 
   final userRepo = Get.put(UserRepository());
+
+  bool _passwordVisible = false; // Track password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +84,6 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      // Updated decoration properties for Name field
                       labelText: "Name",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -104,7 +110,6 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Email field
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
@@ -119,7 +124,6 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      // Updated decoration properties for Email field
                       labelText: "Email",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -146,12 +150,11 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Password field
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
                     controller: passwordGivens,
-                    obscureText: true,
+                    obscureText: !_passwordVisible, // Toggle visibility
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     style: TextStyle(
@@ -161,7 +164,6 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      // Updated decoration properties for Password field
                       labelText: "Password",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -185,12 +187,22 @@ class SignUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.0),
                         borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                       ),
+                      suffixIcon: IconButton( // Add suffix icon for password visibility toggle
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible; // Toggle visibility
+                          });
+                        },
+                        icon: Icon(
+                          _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Color(0xff9e9e9e),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                // Confirm Password field
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 16, 0, 30),
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
                     controller: confirmPassword,
                     obscureText: true,
@@ -203,7 +215,6 @@ class SignUp extends StatelessWidget {
                       color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
-                      // Updated decoration properties for Confirm Password field
                       labelText: "Confirm Password",
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -239,41 +250,26 @@ class SignUp extends StatelessWidget {
                       flex: 1,
                       child: MaterialButton(
                         onPressed: () {
-                          if (passwordGivens.text == confirmPassword.text) {
-                            final user = UserModel(
-                              email: emailGivens.text,
-                              passWord: passwordGivens.text,
-                              question1: "test", // Replace with actual questions
-                              question2: "test", // Replace with actual questions
-                              userName: usernameGiven.text,
-                            );
-                            userRepo.createUser(user);
+                          if (_validatePassword(passwordGivens.text)) {
+                            if (passwordGivens.text == confirmPassword.text) {
+                              final user = UserModel(
+                                email: emailGivens.text,
+                                passWord: passwordGivens.text,
+                                question1: "test", // Replace with actual questions
+                                question2: "test", // Replace with actual questions
+                                userName: usernameGiven.text,
+                              );
+                              userRepo.createUser(user);
 
-                            // Show success message
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Success"),
-                                  content: Text("Account created successfully!"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        // Navigate to the Login screen
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Login(),
-                                          ),
-                                        );
-                                      },
-                                      child: Text("OK"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                              // Show success message
+                              _showSuccessDialog(context);
+                            } else {
+                              // Show password mismatch error message
+                              _showPasswordMismatchDialog(context);
+                            }
+                          } else {
+                            // Show password requirements error message
+                            _showPasswordRequirementsDialog(context);
                           }
                         },
                         color: Color(0xff3a57e8),
@@ -336,6 +332,85 @@ class SignUp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  // Validate password requirements
+  bool _validatePassword(String password) {
+    if (password.length < 8) return false;
+    if (!password.contains(RegExp(r'[0-9]'))) return false;
+    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) return false;
+    return true;
+  }
+
+  // Show success message
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success"),
+          content: Text("Account created successfully!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Navigate to the Login screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ),
+                );
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Show password mismatch error message
+  void _showPasswordMismatchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Password Mismatch"),
+          content: Text("Passwords do not match. Please try again."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Show password requirements error message
+  void _showPasswordRequirementsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Password Requirements"),
+          content: Text(
+              "Password must be at least 8 characters long and contain at least one number and one symbol."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

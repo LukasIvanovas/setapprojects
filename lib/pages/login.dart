@@ -11,7 +11,7 @@ import 'forgotPassword.dart';
 import 'main.dart';
 import 'profile_controller.dart';
 
-void main() async {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Login extends StatelessWidget {
+
   final emailGiven = TextEditingController();
   final passwordGiven = TextEditingController();
   final controller = Get.put(ProfileController());
@@ -40,6 +41,7 @@ class Login extends StatelessWidget {
   }
 
   @override
+
   Widget build(BuildContext context) {
     clearTextFields();
     return Scaffold(
@@ -93,17 +95,17 @@ class Login extends StatelessWidget {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Email",
                     labelStyle: TextStyle(
@@ -116,7 +118,7 @@ class Login extends StatelessWidget {
                     fillColor: Color(0x00f2f2f3),
                     isDense: false,
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
@@ -134,15 +136,18 @@ class Login extends StatelessWidget {
                 decoration: InputDecoration(
                   disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    borderSide:
+                    BorderSide(color: Color(0xff9e9e9e), width: 1),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    borderSide:
+                    BorderSide(color: Color(0xff9e9e9e), width: 1),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    borderSide:
+                    BorderSide(color: Color(0xff9e9e9e), width: 1),
                   ),
                   labelText: "Password",
                   labelStyle: TextStyle(
@@ -155,7 +160,7 @@ class Login extends StatelessWidget {
                   fillColor: Color(0x00f2f2f3),
                   isDense: false,
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 ),
               ),
               Padding(
@@ -184,6 +189,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
+
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                 child: Row(
@@ -230,14 +236,11 @@ class Login extends StatelessWidget {
                       flex: 1,
                       child: MaterialButton(
                         onPressed: () async {
-                          List<UserModel> userDataList = await ProfileController
-                              .instance
-                              .getUserData(emailGiven.text);
+                          List<UserModel> userDataList = await ProfileController.instance.getUserData(emailGiven.text);
                           if (userDataList[0].passWord == passwordGiven.text) {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
+                              MaterialPageRoute(builder: (context) => HomePage()),
                             );
                           }
                         },
