@@ -18,10 +18,7 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   DateTime selectedDate = DateTime.now();
-  TextEditingController eventNameController = TextEditingController();
-  TextEditingController eventTypeController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController postcodeController = TextEditingController();
+  TimeOfDay selectedTime = TimeOfDay.now(); // Added selectedTime
 
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
@@ -35,6 +32,31 @@ class _CreateEventState extends State<CreateEvent> {
           onDateTimeChanged: (DateTime newDateTime) {
             setState(() {
               selectedDate = newDateTime;
+              // Update the text controller for the date field
+              dateController.text =
+              "${newDateTime.year}-${newDateTime.month}-${newDateTime.day}";
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showTimePicker(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Container(
+        height: 200,
+        color: CupertinoColors.white,
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.time,
+          initialDateTime: DateTime(0, selectedTime.hour, selectedTime.minute),
+          onDateTimeChanged: (DateTime newDateTime) {
+            setState(() {
+              selectedTime = TimeOfDay.fromDateTime(newDateTime);
+              // Update the text controller for the time field
+              timeController.text =
+              "${selectedTime.hour}:${selectedTime.minute}";
             });
           },
         ),
@@ -52,6 +74,13 @@ class _CreateEventState extends State<CreateEvent> {
     );
     UserRepository.instance.addEventToUser(userDocumentId, event);
   }
+
+  TextEditingController eventNameController = TextEditingController();
+  TextEditingController eventTypeController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController postcodeController = TextEditingController();
+  TextEditingController dateController = TextEditingController(); // Added date controller
+  TextEditingController timeController = TextEditingController(); // Added time controller
 
   @override
   Widget build(BuildContext context) {
@@ -115,17 +144,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Name",
                     labelStyle: TextStyle(
@@ -138,10 +167,11 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
+              // Event Type Dropdown
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: DropdownButtonFormField(
@@ -172,17 +202,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Type",
                     labelStyle: TextStyle(
@@ -195,10 +225,11 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
+              // City / Town TextField
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
@@ -215,17 +246,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "City / Town",
                     labelStyle: TextStyle(
@@ -238,10 +269,11 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
+              // Postcode TextField
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: TextField(
@@ -258,17 +290,17 @@ class _CreateEventState extends State<CreateEvent> {
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
-                          BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Postcode",
                     labelStyle: TextStyle(
@@ -281,10 +313,11 @@ class _CreateEventState extends State<CreateEvent> {
                     fillColor: Color(0x00ffffff),
                     isDense: false,
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   ),
                 ),
               ),
+              // Date TextField
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: CupertinoTextField(
@@ -292,8 +325,8 @@ class _CreateEventState extends State<CreateEvent> {
                     _showDatePicker(context);
                   },
                   readOnly: true,
-                  controller: TextEditingController(
-                      text: "${selectedDate.toLocal()}".split(' ')[0]),
+                  controller: dateController,
+                  placeholder: 'Select Date', // Added placeholder text
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: CupertinoColors.white,
@@ -301,6 +334,24 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ),
               ),
+              // Time TextField
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: CupertinoTextField(
+                  onTap: () {
+                    _showTimePicker(context);
+                  },
+                  readOnly: true,
+                  controller: timeController,
+                  placeholder: 'Select Time', // Added placeholder text
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: CupertinoColors.white,
+                    border: Border.all(color: CupertinoColors.systemGrey),
+                  ),
+                ),
+              ),
+              // Create Event Button
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: MaterialButton(
@@ -311,9 +362,8 @@ class _CreateEventState extends State<CreateEvent> {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => MainApp()),
                       // Assuming MainApp is MyApp
-                      (Route<dynamic> route) => false,
+                          (Route<dynamic> route) => false,
                     );
-
                     print("creating finished");
                   },
                   color: Color(0xff3a57e8),
