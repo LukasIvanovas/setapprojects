@@ -6,7 +6,6 @@ import 'package:setapprojects/pages/navBar.dart';
 import 'package:setapprojects/pages/user_model.dart';
 import 'firebase_options.dart';
 import 'signup.dart';
-import 'node.dart';
 import 'forgotPassword.dart';
 import 'main.dart';
 import 'profile_controller.dart';
