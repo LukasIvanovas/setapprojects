@@ -14,8 +14,8 @@ class _SignUpState extends State<SignUp> {
   final passwordGivens = TextEditingController();
   final confirmPassword = TextEditingController();
   final usernameGiven = TextEditingController();
-  final question1 = TextEditingController();
-  final question2 = TextEditingController();
+  final questions1 = TextEditingController();
+  final questions2 = TextEditingController();
 
   final userRepo = Get.put(UserRepository());
 
@@ -241,6 +241,86 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: TextField(
+                    controller: questions1,
+                    obscureText: false,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: "Security Question 1: Childhood Street Address",
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16,
+                        color: Color(0xff9e9e9e),
+                      ),
+                      filled: true,
+                      fillColor: Color(0x00ffffff),
+                      isDense: false,
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: TextField(
+                    controller: questions2,
+                    obscureText: false,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: "Security Question 2: Mother's Maiden Name",
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16,
+                        color: Color(0xff9e9e9e),
+                      ),
+                      filled: true,
+                      fillColor: Color(0x00ffffff),
+                      isDense: false,
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      ),
+                    ),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,8 +335,8 @@ class _SignUpState extends State<SignUp> {
                               final user = UserModel(
                                 email: emailGivens.text,
                                 passWord: passwordGivens.text,
-                                question1: "test", // Replace with actual questions
-                                question2: "test", // Replace with actual questions
+                                question1: questions1.text,
+                                question2: questions2.text,
                                 userName: usernameGiven.text,
                               );
                               userRepo.createUser(user);
