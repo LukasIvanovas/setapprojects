@@ -15,4 +15,12 @@ class ProfileController extends GetxController {
     userDocumentId = userDataList[0].id!;
     return userDataList;
   }
+
+  updateRecord(UserModel user) async {
+    await _userRepo.updateUserRecord(user);
+  }
+
+  Future<void> updatePassword(UserModel user, String newPassword) async {
+    await _userRepo.updatePassword(user, newPassword);
+  }
 }
