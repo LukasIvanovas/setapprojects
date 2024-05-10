@@ -55,7 +55,17 @@ class UserRepository extends GetxController {
      return 'error';
   }
 
+  Future<void> updateUserRecord(UserModel user) async {
+    await _db.collection("users").doc(user.id).update(user.toJson());
   }
+
+  Future<void> updatePassword(UserModel user, String newPassword) async {
+    await _db.collection("users").doc(user.id).update({
+      'passWord': newPassword,
+    });
+  }
+  
+}
 
 
 
