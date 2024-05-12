@@ -126,6 +126,7 @@ class _EditPageState extends State<EditPage> {
   late TextEditingController eventTypeController = TextEditingController();
   late TextEditingController cityController = TextEditingController();
   late TextEditingController postcodeController = TextEditingController();
+  late TextEditingController timeController = TextEditingController();
 
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
@@ -146,6 +147,7 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
+
   void createEvent() async {
     EventModel event = EventModel(
       eventName: eventNameController.text,
@@ -153,6 +155,7 @@ class _EditPageState extends State<EditPage> {
       city: cityController.text,
       postcode: postcodeController.text,
       date: selectedDate,
+      time: timeController.,
     );
 
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:setapprojects/pages/navBar.dart';
 import 'user_repository.dart';
 import 'user_model.dart';
 import 'profile_controller.dart';
@@ -71,6 +72,7 @@ class _CreateEventState extends State<CreateEvent> {
       city: cityController.text,
       postcode: postcodeController.text,
       date: selectedDate,
+      time: timeController,
     );
     UserRepository.instance.addEventToUser(userDocumentId, event);
   }
@@ -79,8 +81,8 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController eventTypeController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController postcodeController = TextEditingController();
-  TextEditingController dateController = TextEditingController(); // Added date controller
-  TextEditingController timeController = TextEditingController(); // Added time controller
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -360,7 +362,7 @@ class _CreateEventState extends State<CreateEvent> {
                     createEvent();
                     // Navigate back to MyApp after event creation
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => MainApp()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                       // Assuming MainApp is MyApp
                           (Route<dynamic> route) => false,
                     );
