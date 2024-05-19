@@ -330,26 +330,30 @@ class _SignUpState extends State<SignUp> {
                       flex: 1,
                       child: MaterialButton(
                         onPressed: () {
-                          if (_validatePassword(passwordGivens.text)) {
-                            if (passwordGivens.text == confirmPassword.text) {
-                              final user = UserModel(
-                                email: emailGivens.text,
-                                passWord: passwordGivens.text,
-                                question1: questions1.text,
-                                question2: questions2.text,
-                                userName: usernameGiven.text,
-                              );
-                              userRepo.createUser(user);
+                          if (_validateEmail(emailGivens.text)) {
+                            if (_validatePassword(passwordGivens.text)) {
+                              if (passwordGivens.text == confirmPassword.text) {
+                                final user = UserModel(
+                                  email: emailGivens.text,
+                                  passWord: passwordGivens.text,
+                                  question1: questions1.text,
+                                  question2: questions2.text,
+                                  userName: usernameGiven.text,
+                                );
+                                userRepo.createUser(user);
 
-                              // Show success message
-                              _showSuccessDialog(context);
+                                // Show success message
+                                _showSuccessDialog(context);
+                              } else {
+                                // Show password mismatch error message
+                                _showPasswordMismatchDialog(context);
+                              }
                             } else {
-                              // Show password mismatch error message
-                              _showPasswordMismatchDialog(context);
+                              // Show password requirements error message
+                              _showPasswordRequirementsDialog(context);
                             }
                           } else {
-                            // Show password requirements error message
-                            _showPasswordRequirementsDialog(context);
+                            _showEmailValidationDialog(context); // Display validation error dialog
                           }
                         },
                         color: Color(0xff3a57e8),
@@ -423,6 +427,11 @@ class _SignUpState extends State<SignUp> {
     return true;
   }
 
+  // Validate email function
+  bool _validateEmail(String email) {
+    return email.contains('@'); // Checks if email contains '@'
+  }
+
   // Show success message
   void _showSuccessDialog(BuildContext context) {
     showDialog(
@@ -481,6 +490,27 @@ class _SignUpState extends State<SignUp> {
           title: Text("Password Requirements"),
           content: Text(
               "Password must be at least 8 characters long and contain at least one number and one symbol."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Show email validation dialog
+  void _showEmailValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Email Validation Error"),
+          content: Text("Email must contain '@' symbol."),
           actions: [
             TextButton(
               onPressed: () {
