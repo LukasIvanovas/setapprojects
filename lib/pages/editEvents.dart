@@ -271,7 +271,7 @@ class _EditPageState extends State<EditPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: DropdownButtonFormField(
-                  value: value: widget.eventDetails[1].isNotEmpty ? widget.eventDetails[1] : null,
+                  value: widget.eventDetails[1].isNotEmpty ? widget.eventDetails[1] : null,
                   items: [
                     DropdownMenuItem(
                       child: Text("Birthday Party"),
