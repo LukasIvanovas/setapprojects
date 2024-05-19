@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'profile_controller.dart';
 import 'user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'user_repository.dart';
-
 
 class EditEvents extends StatefulWidget {
   const EditEvents({Key? key}) : super(key: key);
@@ -12,11 +11,15 @@ class EditEvents extends StatefulWidget {
   @override
   _EditEventsState createState() => _EditEventsState();
 }
+
 class _EditEventsState extends State<EditEvents> {
   Future<List<Widget>> getEvents() async {
     List<Widget> toReturn = [];
 
-    CollectionReference<Map> userDataList = FirebaseFirestore.instance.collection("users").doc(userDocumentId).collection("events");
+    CollectionReference<Map> userDataList = FirebaseFirestore.instance
+        .collection("users")
+        .doc(userDocumentId)
+        .collection("events");
 
     // Fetch the documents
     QuerySnapshot<Map> querySnapshot = await userDataList.get();
@@ -36,31 +39,28 @@ class _EditEventsState extends State<EditEvents> {
       ];
 
       // Add this event's details to the list
-      toReturn.add(
-        Padding(
+      toReturn.add(Padding(
           padding: EdgeInsets.all(20),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.08,
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: SizedBox.expand(
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditPage(eventDetails: eventDetailList),
-                    ),
-                  );
-                },
-                child: Text(
-                  eventDetailList[0],
-                  style: TextStyle(fontSize: 20),
+              height: MediaQuery.of(context).size.height * 0.08,
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: SizedBox.expand(
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditPage(eventDetails: eventDetailList),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    eventDetailList[0],
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
-              ),
-            )
-          )
-        )
-      );
+              ))));
     }
 
     return toReturn;
@@ -69,45 +69,35 @@ class _EditEventsState extends State<EditEvents> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold (
-        body: 
-          ListView(
-            children: [
-              
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.all(25),
-                  child: Text(
-                    "Select an event to edit",
-                    style: TextStyle(
-                      fontSize: 30,
-                    )
-                  )
+        home: Scaffold(
+            body: ListView(
+              children: [
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                        padding: EdgeInsets.all(25),
+                        child: Text("Select an event to edit",
+                            style: TextStyle(
+                              fontSize: 30,
+                            )))),
+                FutureBuilder<List<Widget>>(
+                  future: getEvents(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Show loading spinner while waiting
+                    } else if (snapshot.hasError) {
+                      return Text(
+                          'Error: ${snapshot.error}'); // Show error message if any error occurred
+                    } else {
+                      return Column(children: snapshot.data!); // Display your widgets when data is available
+                    }
+                  },
                 )
-              ),
-
-              FutureBuilder<List<Widget>>(
-                future: getEvents(),
-                builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(); // Show loading spinner while waiting
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}'); // Show error message if any error occurred
-                  } else {
-                    return Column(children: snapshot.data!); // Display your widgets when data is available
-                  }
-                },
-              )
-            ],
-          )
-      )
-    );
+              ],
+            )));
   }
 }
-
-
-
 
 class EditPage extends StatefulWidget {
   final List<dynamic> eventDetails;
@@ -119,13 +109,13 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  
-
   DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+
   late TextEditingController eventNameController = TextEditingController(text: widget.eventDetails[0]);
-  late TextEditingController eventTypeController = TextEditingController();
-  late TextEditingController cityController = TextEditingController();
-  late TextEditingController postcodeController = TextEditingController();
+  late TextEditingController eventTypeController = TextEditingController(text: widget.eventDetails[1]);
+  late TextEditingController cityController = TextEditingController(text: widget.eventDetails[3]);
+  late TextEditingController postcodeController = TextEditingController(text: widget.eventDetails[4]);
   late TextEditingController timeController = TextEditingController();
 
   void _showDatePicker(BuildContext context) {
@@ -147,39 +137,62 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
+  void _showTimePicker(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Container(
+        height: 200,
+        color: CupertinoColors.white,
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.time,
+          initialDateTime: DateTime(0, selectedTime.hour, selectedTime.minute),
+          onDateTimeChanged: (DateTime newDateTime) {
+            setState(() {
+              selectedTime = TimeOfDay.fromDateTime(newDateTime);
+              timeController.text = "${selectedTime.hour}:${selectedTime.minute}";
+            });
+          },
+        ),
+      ),
+    );
+  }
 
   void createEvent() async {
+    // Parse time string to DateTime
+    List<String> timeParts = timeController.text.split(':');
+    DateTime eventTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      int.parse(timeParts[0]),
+      int.parse(timeParts[1]),
+    );
+
     EventModel event = EventModel(
       eventName: eventNameController.text,
       eventType: eventTypeController.text,
       city: cityController.text,
       postcode: postcodeController.text,
       date: selectedDate,
-      time: timeController.,
+      time: eventTime,
     );
-
-
 
     var eventId = widget.eventDetails[5];
 
     UserRepository.instance.updateUserEvent(userDocumentId, eventId, event);
   }
 
-  String? dropdownValue;
-
-
   @override
-  
   void initState() {
     super.initState();
     eventNameController = TextEditingController(text: widget.eventDetails[0]);
-    eventTypeController = TextEditingController();
+    eventTypeController = TextEditingController(text: widget.eventDetails[1]);
     cityController = TextEditingController(text: widget.eventDetails[3]);
     postcodeController = TextEditingController(text: widget.eventDetails[4]);
-    dropdownValue = widget.eventDetails[1];
+    timeController = TextEditingController(text: "${selectedTime.hour}:${selectedTime.minute}");
   }
 
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
@@ -214,7 +227,7 @@ class _EditPageState extends State<EditPage> {
                 ),
               ),
               Text(
-                "Create Event",
+                "Edit Event",
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.clip,
                 style: TextStyle(
@@ -240,18 +253,15 @@ class _EditPageState extends State<EditPage> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Name",
                     labelStyle: TextStyle(
@@ -271,7 +281,7 @@ class _EditPageState extends State<EditPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: DropdownButtonFormField(
-                  value: widget.eventDetails[1].isNotEmpty ? widget.eventDetails[1] : null,
+                  value: dropdownValue,
                   items: [
                     DropdownMenuItem(
                       child: Text("Birthday Party"),
@@ -289,28 +299,49 @@ class _EditPageState extends State<EditPage> {
                       child: Text("Holiday"),
                       value: "Holiday",
                     ),
-
+                    DropdownMenuItem(
+                      child: Text("Funeral"),
+                      value: "Funeral",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Graduation"),
+                      value: "Graduation",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Conference"),
+                      value: "Conference",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Workshop"),
+                      value: "Workshop",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Concert"),
+                      value: "Concert",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Festival"),
+                      value: "Festival",
+                    ),
                   ],
                   onChanged: (value) {
                     setState(() {
-                      eventTypeController.text = value.toString(); 
+                      dropdownValue = value.toString();
+                      eventTypeController.text = value.toString();
                     });
                   },
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Type",
                     labelStyle: TextStyle(
@@ -342,18 +373,15 @@ class _EditPageState extends State<EditPage> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "City / Town",
                     labelStyle: TextStyle(
@@ -385,18 +413,15 @@ class _EditPageState extends State<EditPage> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Postcode",
                     labelStyle: TextStyle(
@@ -420,8 +445,8 @@ class _EditPageState extends State<EditPage> {
                     _showDatePicker(context);
                   },
                   readOnly: true,
-                  controller:
-                  TextEditingController(text: "${selectedDate.toLocal()}".split(' ')[0]),
+                  controller: TextEditingController(
+                      text: "${selectedDate.toLocal()}".split(' ')[0]),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: CupertinoColors.white,
@@ -429,75 +454,81 @@ class _EditPageState extends State<EditPage> {
                   ),
                 ),
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 16, 30, 0),
-                    child: MaterialButton(
-                      onPressed: () {
-                        // dispose();
-                        Navigator.pop(context);
-                      },
-                      color: Color(0xff3a57e8),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        side: BorderSide(
-                          color: Color(0xff9e9e9e),
-                          width: 1,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      textColor: Color(0xffffffff),
-                      height: 40,
-                    ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: CupertinoTextField(
+                  onTap: () {
+                    _showTimePicker(context);
+                  },
+                  readOnly: true,
+                  controller: timeController,
+                  placeholder: 'Select Time',
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: CupertinoColors.white,
+                    border: Border.all(color: CupertinoColors.systemGrey),
                   ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                    child: MaterialButton(
-                      onPressed: () {
-                        print("creating started");
-                        createEvent();
-                        // dispose();
-                        Navigator.of(context).pop();
-                        print("creating finished");
-                      },
-                      color: Color(0xff3a57e8),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        side: BorderSide(
-                          color: Color(0xff9e9e9e),
-                          width: 1,
-                        ),
+                ),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 30, 0),
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    color: Color(0xff3a57e8),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      side: BorderSide(
+                        color: Color(0xff9e9e9e),
+                        width: 1,
                       ),
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        "Edit Event",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      textColor: Color(0xffffffff),
-                      height: 40,
                     ),
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                      ),
+                    ),
+                    textColor: Color(0xffffffff),
+                    height: 40,
                   ),
-                ]
-              )
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: MaterialButton(
+                    onPressed: () {
+                      createEvent();
+                      Navigator.of(context).pop();
+                    },
+                    color: Color(0xff3a57e8),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      side: BorderSide(
+                        color: Color(0xff9e9e9e),
+                        width: 1,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      "Edit Event",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                      ),
+                    ),
+                    textColor: Color(0xffffffff),
+                    height: 40,
+                  ),
+                ),
+              ])
             ],
           ),
         ),

@@ -19,7 +19,7 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now(); // Added selectedTime
+  TimeOfDay selectedTime = TimeOfDay.now();
 
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
@@ -33,7 +33,6 @@ class _CreateEventState extends State<CreateEvent> {
           onDateTimeChanged: (DateTime newDateTime) {
             setState(() {
               selectedDate = newDateTime;
-              // Update the text controller for the date field
               dateController.text =
               "${newDateTime.year}-${newDateTime.month}-${newDateTime.day}";
             });
@@ -55,7 +54,6 @@ class _CreateEventState extends State<CreateEvent> {
           onDateTimeChanged: (DateTime newDateTime) {
             setState(() {
               selectedTime = TimeOfDay.fromDateTime(newDateTime);
-              // Update the text controller for the time field
               timeController.text =
               "${selectedTime.hour}:${selectedTime.minute}";
             });
@@ -66,13 +64,23 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   void createEvent() async {
+    // Parse time string to DateTime
+    List<String> timeParts = timeController.text.split(':');
+    DateTime eventTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      int.parse(timeParts[0]),
+      int.parse(timeParts[1]),
+    );
+
     EventModel event = EventModel(
       eventName: eventNameController.text,
       eventType: eventTypeController.text,
       city: cityController.text,
       postcode: postcodeController.text,
       date: selectedDate,
-      time: timeController,
+      time: eventTime,
     );
     UserRepository.instance.addEventToUser(userDocumentId, event);
   }
@@ -145,18 +153,15 @@ class _CreateEventState extends State<CreateEvent> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Name",
                     labelStyle: TextStyle(
@@ -194,6 +199,30 @@ class _CreateEventState extends State<CreateEvent> {
                       child: Text("Holiday"),
                       value: "Holiday",
                     ),
+                    DropdownMenuItem(
+                      child: Text("Funeral"),
+                      value: "Funeral",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Graduation"),
+                      value: "Graduation",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Conference"),
+                      value: "Conference",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Workshop"),
+                      value: "Workshop",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Concert"),
+                      value: "Concert",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Festival"),
+                      value: "Festival",
+                    ),
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -203,18 +232,15 @@ class _CreateEventState extends State<CreateEvent> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Type",
                     labelStyle: TextStyle(
@@ -247,18 +273,15 @@ class _CreateEventState extends State<CreateEvent> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "City / Town",
                     labelStyle: TextStyle(
@@ -291,18 +314,15 @@ class _CreateEventState extends State<CreateEvent> {
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Postcode",
                     labelStyle: TextStyle(
@@ -328,7 +348,7 @@ class _CreateEventState extends State<CreateEvent> {
                   },
                   readOnly: true,
                   controller: dateController,
-                  placeholder: 'Select Date', // Added placeholder text
+                  placeholder: 'Select Date',
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: CupertinoColors.white,
@@ -345,7 +365,7 @@ class _CreateEventState extends State<CreateEvent> {
                   },
                   readOnly: true,
                   controller: timeController,
-                  placeholder: 'Select Time', // Added placeholder text
+                  placeholder: 'Select Time',
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: CupertinoColors.white,
@@ -363,7 +383,7 @@ class _CreateEventState extends State<CreateEvent> {
                     // Navigate back to MyApp after event creation
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => HomePage()),
-                      // Assuming MainApp is MyApp
+                      // Assuming HomePage is the main screen
                           (Route<dynamic> route) => false,
                     );
                     print("creating finished");
