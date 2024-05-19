@@ -78,6 +78,7 @@ class Login extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                 child: TextField(
+                  key: ValueKey("emailKey"),
                   controller: emailGiven,
                   obscureText: false,
                   textAlign: TextAlign.start,
@@ -116,6 +117,7 @@ class Login extends StatelessWidget {
                 ),
               ),
               TextField(
+                key: ValueKey("passwordKey"),
                 controller: passwordGiven,
                 obscureText: true,
                 textAlign: TextAlign.start,
@@ -224,6 +226,7 @@ class Login extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: MaterialButton(
+                        key: ValueKey("loginKey"),
                         onPressed: () async {
                           List<UserModel> userDataList = await ProfileController.instance.getUserData(emailGiven.text);
                           if (userDataList.isEmpty || userDataList[0].passWord != passwordGiven.text) {
