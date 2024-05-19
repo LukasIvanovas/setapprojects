@@ -40,6 +40,7 @@ class EventModel {
   final String city;
   final String postcode;
   final DateTime date;
+  final DateTime time;
 
   EventModel({
     required this.eventName,
@@ -47,6 +48,7 @@ class EventModel {
     required this.city,
     required this.postcode,
     required this.date,
+    required this.time,
   });
 
   Map<String, dynamic> toJson() {
@@ -56,6 +58,7 @@ class EventModel {
       'city': city,
       'postcode': postcode,
       'date': date,
+      'time': time,
     };
   }
 }

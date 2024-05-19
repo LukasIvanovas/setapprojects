@@ -126,6 +126,7 @@ class _EditPageState extends State<EditPage> {
   late TextEditingController eventTypeController = TextEditingController();
   late TextEditingController cityController = TextEditingController();
   late TextEditingController postcodeController = TextEditingController();
+  late TextEditingController timeController = TextEditingController();
 
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
@@ -146,6 +147,7 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
+
   void createEvent() async {
     EventModel event = EventModel(
       eventName: eventNameController.text,
@@ -153,6 +155,7 @@ class _EditPageState extends State<EditPage> {
       city: cityController.text,
       postcode: postcodeController.text,
       date: selectedDate,
+      time: timeController.,
     );
 
 
@@ -268,7 +271,7 @@ class _EditPageState extends State<EditPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: DropdownButtonFormField(
-                  value: widget.eventDetails[1],
+                  value: widget.eventDetails[1].isNotEmpty ? widget.eventDetails[1] : null,
                   items: [
                     DropdownMenuItem(
                       child: Text("Birthday Party"),
@@ -279,8 +282,8 @@ class _EditPageState extends State<EditPage> {
                       value: "Wedding",
                     ),
                     DropdownMenuItem(
-                      child: Text("School Renunion"),
-                      value: "School Renunion",
+                      child: Text("School Reunion"),
+                      value: "School Reunion",
                     ),
                     DropdownMenuItem(
                       child: Text("Holiday"),
