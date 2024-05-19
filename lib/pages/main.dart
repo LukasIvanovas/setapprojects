@@ -137,13 +137,7 @@ Widget build(BuildContext context) {
       appBar: AppBar(
         backgroundColor: GlobColor1,
         leading: GestureDetector(
-          onTap: () {
-            // naya - add nav bar code here
-          },
-          child: const Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
+
         ),
       ),
       body: StreamBuilder<List<Widget>>(
@@ -159,38 +153,35 @@ Widget build(BuildContext context) {
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        border: Border.all(color: Colors.indigoAccent, width: 1),
-                        color: Colors.indigo.shade200
-                      ),
+                    padding: const EdgeInsets.all(15),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.1,
+                        height: MediaQuery.of(context).size.height * 0.3,
                         child: SizedBox.expand(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => CreateEvent()),
-                              );
-                            },
-                            style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)))),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Add event",
+                          child: Column(
+                            children: [
+                              Image.network(
+                                "https://cdn3.iconfinder.com/data/icons/network-and-communications-6/130/291-128.png",
+                                height: 120,
+                                width: 120,
+                                fit: BoxFit.cover,
+                              ),
+
+                              const Text(
+                                "Planify",
                                 style: TextStyle(
-                                  fontSize: 25,
-                                )
-                              )
-                            )
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 28,
+                                  color: Color(0xff3a57e8),
+                                ),
+                              ),
+
+                            ]
                           )
                         )
+
                       )
-                    ),
+
                   ),
                 ),
                 const Align(
