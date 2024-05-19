@@ -282,8 +282,8 @@ class _EditPageState extends State<EditPage> {
                       value: "Wedding",
                     ),
                     DropdownMenuItem(
-                      child: Text("School Renunion"),
-                      value: "School Renunion",
+                      child: Text("School Reunion"),
+                      value: "School Reunion",
                     ),
                     DropdownMenuItem(
                       child: Text("Holiday"),
