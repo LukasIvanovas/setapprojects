@@ -134,12 +134,7 @@ Widget build(BuildContext context) {
   return MaterialApp(
     home: Scaffold(
       backgroundColor: GlobBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: GlobColor1,
-        leading: GestureDetector(
-
-        ),
-      ),
+     
       body: StreamBuilder<List<Widget>>(
         stream: getEvents(context),
         builder: (context, snapshot) {
