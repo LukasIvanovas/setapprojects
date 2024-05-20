@@ -5,6 +5,7 @@ import 'user_model.dart';
 import 'user_repository.dart';
 
 String userDocumentId = '';
+String userPass = '';
 
 class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
@@ -13,6 +14,7 @@ class ProfileController extends GetxController {
   Future<List<UserModel>> getUserData(String email) async {
     List<UserModel> userDataList = await _userRepo.getUserDetails(email);
     userDocumentId = userDataList[0].id!;
+    userPass = userDataList[0].passWord;
     return userDataList;
   }
 
