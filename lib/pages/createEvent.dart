@@ -82,6 +82,13 @@ class _CreateEventState extends State<CreateEvent> {
       date: selectedDate,
       time: eventTime,
     );
+    String attendees = inviteesController.text;
+    List<String> invitees = attendees.split(" ");
+    for (int i = 0; i < invitees.length; i++) {
+      List<UserModel> userInv = await ProfileController.instance.getUserData(invitees[i]);
+      String? userID = userInv[0].id;
+      UserRepository.instance.inviteUser(userID!, event);
+    }
     UserRepository.instance.addEventToUser(userDocumentId, event);
   }
 
@@ -91,6 +98,7 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController postcodeController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
+  TextEditingController inviteesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -325,6 +333,49 @@ class _CreateEventState extends State<CreateEvent> {
                       borderSide: BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     labelText: "Event Postcode",
+                    labelStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16,
+                      color: Color(0xff9e9e9e),
+                    ),
+                    filled: true,
+                    fillColor: Color(0x00ffffff),
+                    isDense: false,
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: TextField(
+                  controller: inviteesController,
+                  textAlign: TextAlign.start,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16,
+                    color: Color(0xff000000),
+                  ),
+                  decoration: InputDecoration(
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                      borderSide:
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                      borderSide:
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                      borderSide:
+                      BorderSide(color: Color(0xff9e9e9e), width: 1),
+                    ),
+                    labelText: "Invitees",
                     labelStyle: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
