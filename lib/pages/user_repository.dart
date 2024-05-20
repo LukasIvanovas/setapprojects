@@ -38,6 +38,12 @@ class UserRepository extends GetxController {
     print("add event to user finished");
   }
 
+  Future<void> inviteUser(String userId, EventModel event) async {
+    print("invite user started");
+    await _db.collection("users").doc(userId).collection("attending").add(event.toJson());
+    print("invite user finished");
+  }
+
   Future<void> updateUserEvent(String userId, String eventId, EventModel event) async {
     print("updating event");
     _db.collection("users").doc(userId).collection("events").doc(eventId).update(event.toJson());
@@ -61,6 +67,12 @@ class UserRepository extends GetxController {
 
   Future<void> updatePassword(UserModel user, String newPassword) async {
     await _db.collection("users").doc(user.id).update({
+      'passWord': newPassword,
+    });
+  }
+
+  Future<void> idUpdatePassword(String? ID, String newPassword) async {
+    await _db.collection("users").doc(ID).update({
       'passWord': newPassword,
     });
   }
