@@ -18,6 +18,11 @@ class ProfileController extends GetxController {
     return userDataList;
   }
 
+  Future<List<UserModel>> getInviteData(String email) async {
+    List<UserModel> userDataList = await _userRepo.getUserDetails(email);
+    return userDataList;
+  }
+
   updateRecord(UserModel user) async {
     await _userRepo.updateUserRecord(user);
   }
