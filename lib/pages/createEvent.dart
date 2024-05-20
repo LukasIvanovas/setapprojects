@@ -86,7 +86,7 @@ class _CreateEventState extends State<CreateEvent> {
     String attendees = inviteesController.text;
     List<String> invitees = attendees.split(" ");
     for (int i = 0; i < invitees.length; i++) {
-      List<UserModel> userInv = await ProfileController.instance.getUserData(invitees[i]);
+      List<UserModel> userInv = await ProfileController.instance.getInviteData(invitees[i]);
       String? inviteID = userInv[0].id;
       UserRepository.instance.inviteUser(inviteID!, event);
     }
