@@ -21,14 +21,11 @@ class _EditEventsState extends State<EditEvents> {
         .doc(userDocumentId)
         .collection("events");
 
-    // Fetch the documents
     QuerySnapshot<Map> querySnapshot = await userDataList.get();
 
-    // Iterate over each document
     for (var doc in querySnapshot.docs) {
       Map<dynamic, dynamic> data = doc.data();
 
-      // Create a list for this event's details
       List<dynamic> eventDetailList = [
         data['eventName'],
         data['eventType'],
@@ -38,7 +35,6 @@ class _EditEventsState extends State<EditEvents> {
         doc.id,
       ];
 
-      // Add this event's details to the list
       toReturn.add(Padding(
           padding: EdgeInsets.all(20),
           child: SizedBox(
@@ -85,12 +81,12 @@ class _EditEventsState extends State<EditEvents> {
                   builder:
                       (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // Show loading spinner while waiting
+                      return CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text(
-                          'Error: ${snapshot.error}'); // Show error message if any error occurred
+                          'Error: ${snapshot.error}');
                     } else {
-                      return Column(children: snapshot.data!); // Display your widgets when data is available
+                      return Column(children: snapshot.data!);
                     }
                   },
                 )
@@ -117,6 +113,8 @@ class _EditPageState extends State<EditPage> {
   late TextEditingController cityController = TextEditingController(text: widget.eventDetails[3]);
   late TextEditingController postcodeController = TextEditingController(text: widget.eventDetails[4]);
   late TextEditingController timeController = TextEditingController();
+
+  late String dropdownValue;
 
   void _showDatePicker(BuildContext context) {
     showCupertinoModalPopup(
@@ -158,7 +156,6 @@ class _EditPageState extends State<EditPage> {
   }
 
   void createEvent() async {
-    // Parse time string to DateTime
     List<String> timeParts = timeController.text.split(':');
     DateTime eventTime = DateTime(
       selectedDate.year,
@@ -190,6 +187,25 @@ class _EditPageState extends State<EditPage> {
     cityController = TextEditingController(text: widget.eventDetails[3]);
     postcodeController = TextEditingController(text: widget.eventDetails[4]);
     timeController = TextEditingController(text: "${selectedTime.hour}:${selectedTime.minute}");
+    dropdownValue = widget.eventDetails[1];
+
+    // Ensure dropdownValue is valid
+    final eventTypes = [
+      "Birthday Party",
+      "Wedding",
+      "School Reunion",
+      "Holiday",
+      "Funeral",
+      "Graduation",
+      "Conference",
+      "Workshop",
+      "Concert",
+      "Festival"
+    ];
+
+    if (!eventTypes.contains(dropdownValue)) {
+      dropdownValue = eventTypes.first;
+    }
   }
 
   @override

@@ -34,7 +34,7 @@ class _CreateEventState extends State<CreateEvent> {
             setState(() {
               selectedDate = newDateTime;
               dateController.text =
-              "${newDateTime.year}-${newDateTime.month}-${newDateTime.day}";
+              "${newDateTime.year}-${newDateTime.day}-${newDateTime.month}";
             });
           },
         ),
