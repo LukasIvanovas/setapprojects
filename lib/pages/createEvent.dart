@@ -82,6 +82,7 @@ class _CreateEventState extends State<CreateEvent> {
       date: selectedDate,
       time: eventTime,
     );
+    UserRepository.instance.addEventToUser(userDocumentId, event);
     String attendees = inviteesController.text;
     List<String> invitees = attendees.split(" ");
     for (int i = 0; i < invitees.length; i++) {
@@ -89,7 +90,6 @@ class _CreateEventState extends State<CreateEvent> {
       String? userID = userInv[0].id;
       UserRepository.instance.inviteUser(userID!, event);
     }
-    UserRepository.instance.addEventToUser(userDocumentId, event);
   }
 
   TextEditingController eventNameController = TextEditingController();
