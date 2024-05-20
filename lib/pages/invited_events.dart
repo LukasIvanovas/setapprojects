@@ -112,18 +112,6 @@ class InvitedEvents extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: GlobBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: GlobColor1,
-          leading: GestureDetector(
-            onTap: () {
-              // naya - add nav bar code here
-            },
-            child: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-          ),
-        ),
         body: StreamBuilder<List<Widget>>(
           stream: getEvents(context),
           builder: (context, snapshot) {
