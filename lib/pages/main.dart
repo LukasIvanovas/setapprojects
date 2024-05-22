@@ -133,8 +133,6 @@ class MainApp extends StatelessWidget {
 Widget build(BuildContext context) {
   return MaterialApp(
     home: Scaffold(
-      backgroundColor: GlobBackgroundColor,
-     
       body: StreamBuilder<List<Widget>>(
         stream: getEvents(context),
         builder: (context, snapshot) {
