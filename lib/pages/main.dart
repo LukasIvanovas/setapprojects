@@ -49,13 +49,15 @@ class MainApp extends StatelessWidget {
         for (var doc in snapshot.docs) {
           var eventData = doc.data();
           String eventName = eventData['eventName'] ?? 'No Name';
-          DateTime eventDate = (eventData['date'] as Timestamp).toDate();
+
           String eventLocation = eventData['city'] ?? 'No Location';
           String eventType = eventData['eventType'] ?? 'No Type';
           String eventPostcode = eventData['postcode'] ?? 'No Postcode';
 
-      String eventDetails = "Location: $eventLocation\nDate: $eventDate";
-      eventWidgets.add(
+          DateTime eventTime = (eventData['time'] as Timestamp).toDate();
+          String eventDetails = "Location: $eventLocation\nDate: ${eventTime.day}/${eventTime.month}/${eventTime.year} Time: ${eventTime.hour}:${eventTime.minute.toString().padLeft(2, '0')}\nPostcode: $eventPostcode";
+
+          eventWidgets.add(
         Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.024),
           child: SizedBox(

@@ -188,24 +188,6 @@ class _EditPageState extends State<EditPage> {
     postcodeController = TextEditingController(text: widget.eventDetails[4]);
     timeController = TextEditingController(text: "${selectedTime.hour}:${selectedTime.minute}");
     dropdownValue = widget.eventDetails[1];
-
-    // Ensure dropdownValue is valid
-    final eventTypes = [
-      "Birthday Party",
-      "Wedding",
-      "School Reunion",
-      "Holiday",
-      "Funeral",
-      "Graduation",
-      "Conference",
-      "Workshop",
-      "Concert",
-      "Festival"
-    ];
-
-    if (!eventTypes.contains(dropdownValue)) {
-      dropdownValue = eventTypes.first;
-    }
   }
 
   @override
