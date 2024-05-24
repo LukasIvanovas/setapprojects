@@ -255,7 +255,8 @@ class Login extends StatelessWidget {
                                 );
                               },
                             );
-                          } else {
+                          } else
+                          {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => HomePage()),
