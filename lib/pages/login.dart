@@ -12,18 +12,22 @@ import 'profile_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+  final fb = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(MyApp(fb: fb));
 }
 
 class MyApp extends StatelessWidget {
+  final fb;
+
+  MyApp({this.fb});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Login(),
+      home: Login(fb: fb),
     );
   }
 }
@@ -32,7 +36,9 @@ class Login extends StatelessWidget {
   final emailGiven = TextEditingController();
   final passwordGiven = TextEditingController();
   final controller = Get.put(ProfileController());
+  final fb;
 
+  Login({this.fb});
   void clearTextFields() {
     emailGiven.clear();
     passwordGiven.clear();
@@ -191,6 +197,7 @@ class Login extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: MaterialButton(
+                        key: ValueKey("signupButton"),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -228,7 +235,7 @@ class Login extends StatelessWidget {
                       child: MaterialButton(
                         key: ValueKey("loginKey"),
                         onPressed: () async {
-                          List<UserModel> userDataList = await ProfileController.instance.getUserData(emailGiven.text);
+                          List<dynamic> userDataList = await ProfileController.instance.getUserData(emailGiven.text);
                           if (userDataList.isEmpty || userDataList[0].passWord != passwordGiven.text) {
                             // Show login failed dialog
                             showDialog(
